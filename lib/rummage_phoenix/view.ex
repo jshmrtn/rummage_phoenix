@@ -17,8 +17,8 @@ defmodule Rummage.Phoenix.View do
   """
   defmacro __using__(opts) do
     quote do
-      import Rummage.Phoenix.{PaginateView, SortView, ViewResolver}
-      alias Rummage.Phoenix.{PaginateView, SortView, ViewResolver}
+      import Rummage.Phoenix.{PaginateView, SortView}
+      alias Rummage.Phoenix.{PaginateView, SortView}
 
       defp helpers do
         helpers = unquote(opts[:helpers]) ||
