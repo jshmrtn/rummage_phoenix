@@ -53,7 +53,7 @@ end
   defp deps do
     [
       # Development Dependencies
-      {:phoenix, "~> 1.3.0"},
+      {:phoenix, "~> 1.3"},
       {:phoenix_html, "~> 2.11"},
 
       # Other Dependencies
