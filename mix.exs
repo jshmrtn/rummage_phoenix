@@ -62,7 +62,7 @@ end
       {:excoveralls, "~> 0.8", only: :test, runtime: false},
       {:inch_ex, "~> 0.5", only: [:dev, :test, :docs], runtime: false},
       {:postgrex, "~> 0.13", only: :test, optional: true, runtime: false},
-      {:rummage_ecto, "~> 2.0"},
+      {:rummage_ecto, "~> 2.0-rc"},
     ]
   end
 
