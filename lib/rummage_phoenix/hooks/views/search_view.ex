@@ -24,6 +24,7 @@ defmodule Rummage.Phoenix.SearchView do
 
   import Phoenix.HTML
   import Phoenix.HTML.Form
+  import Rummage.Phoenix.Gettext
 
   @doc """
   This macro includes the helpers functions for searching.
@@ -75,7 +76,7 @@ defmodule Rummage.Phoenix.SearchView do
     Enum.map(fields, fn(field) ->
       field_name = elem(field, 0)
       field_params = elem(field, 1)
-      label = field_params[:label] || "Search by #{Phoenix.Naming.humanize(field_name)}"
+      label = field_params[:label] || gettext("Search by ") <> "#{Phoenix.Naming.humanize(field_name)}"
       search_type = field_params[:search_type] || "like"
       input_type = field_params[:input_type] || :search_input
       search_class = field_params[:search_class] || "form-control"

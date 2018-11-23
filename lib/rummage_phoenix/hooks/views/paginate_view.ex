@@ -23,6 +23,7 @@ defmodule Rummage.Phoenix.PaginateView do
   """
 
   use Rummage.Phoenix.ThemeAdapter
+  import Rummage.Phoenix.Gettext
 
   @doc """
   This macro includes the helper functions for pagination
@@ -64,7 +65,7 @@ defmodule Rummage.Phoenix.PaginateView do
     paginate_params = rummage.paginate
 
     per_page = paginate_params.per_page
-    label = opts[:all_label] || "All"
+    label = opts[:all_label] || gettext("All")
 
     case per_page == -1 do
       true -> page_link "#", :disabled, do: label
@@ -92,7 +93,7 @@ defmodule Rummage.Phoenix.PaginateView do
     page = paginate_params.page
     per_page = paginate_params.per_page
     # max_page_links = String.to_integer(paginate_params["max_page_links"] || "4")
-    label = opts[:first_label] || "First"
+    label = opts[:first_label] || gettext("First")
 
     case page == 1 do
       true -> page_link "#", :disabled, do: label
@@ -107,7 +108,7 @@ defmodule Rummage.Phoenix.PaginateView do
 
     page = paginate_params.page
     per_page = paginate_params.per_page
-    label = opts[:previous_label] || "Previous"
+    label = opts[:previous_label] || gettext("Previous")
 
     case page <= 1 do
       true -> page_link "#", :disabled, do: label
@@ -150,7 +151,7 @@ defmodule Rummage.Phoenix.PaginateView do
     page = paginate_params.page
     per_page = paginate_params.per_page
     max_page = paginate_params.max_page
-    label = opts[:next_label] || "Next"
+    label = opts[:next_label] || gettext("Next")
 
     case page >= max_page do
       true -> page_link "#", :disabled, do: label
@@ -167,7 +168,7 @@ defmodule Rummage.Phoenix.PaginateView do
     per_page = paginate_params.per_page
     # max_page_links = String.to_integer(paginate_params["max_page_links"] || "4")
     max_page = paginate_params.max_page
-    label = opts[:last_label] || "Last"
+    label = opts[:last_label] || gettext("Last")
 
     case page == max_page do
       true -> page_link "#", :disabled, do: label
