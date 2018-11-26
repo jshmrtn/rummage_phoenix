@@ -59,11 +59,10 @@ defmodule Rummage.Phoenix.SortView do
     rummage_key = Keyword.get(opts, :rummage_key, :rummage)
 
     # Drop pagination unless we're showing the entire result set
-    rummage_params = if rummage.params.paginate && rummage.params.paginate.per_page == -1 do
-      rummage.params
+    rummage_params = if rummage.params && rummage.params.paginate && rummage.params.paginate.per_page && rummage.params.paginate.per_page != -1 do
+      Map.drop(rummage.params, [:paginate])
     else
       rummage.params
-      |> Map.drop([:paginate])
     end
 
     if sort_params.name == Atom.to_string(field) do
