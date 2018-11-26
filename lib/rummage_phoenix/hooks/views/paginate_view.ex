@@ -180,12 +180,12 @@ defmodule Rummage.Phoenix.PaginateView do
 
   defp transform_params(rummage, per_page, page, opts)
   defp transform_params(rummage, per_page, page, %{slugs: slugs, slugs_params: slugs_params}) do
-    rummage = %{rummage: Map.put(rummage.params, "paginate", %{"per_page"=> per_page, "page"=> page})}
+    rummage = %{rummage: Map.put(rummage, "paginate", %{"per_page"=> per_page, "page"=> page})}
     slugs ++ Map.merge(rummage, slugs_params)
   end
   defp transform_params(rummage, per_page, page, _opts) do
     %{rummage:
-        Map.put(rummage.params, :paginate,
+        Map.put(rummage, :paginate,
         %{per_page: per_page, page: page})
     }
   end

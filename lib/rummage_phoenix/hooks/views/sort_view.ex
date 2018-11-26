@@ -59,30 +59,30 @@ defmodule Rummage.Phoenix.SortView do
     rummage_key = Keyword.get(opts, :rummage_key, :rummage)
 
     # Drop pagination unless we're showing the entire result set
-    rummage_params = if rummage.params && rummage.params.paginate && rummage.params.paginate.per_page && rummage.params.paginate.per_page != -1 do
-      Map.drop(rummage.params, [:paginate])
+    rummage_params = if is_nil(rummage[:paginate][:per_page]) or rummage.paginate.per_page != -1 do
+      Map.drop(rummage, [:paginate])
     else
-      rummage.params
+      rummage
     end
 
     if sort_params.name == Atom.to_string(field) do
       case sort_params.order do
-        "asc" ->
+        :asc ->
           rummage_params = rummage_params
-          |> Map.put(:sort, %{name: field, order: "desc"})
+          |> Map.put(:sort, %{name: field, order: :desc})
 
           url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
           sort_text_or_image(url, [img: desc_icon, text: desc_text], name)
-        "desc" ->
+        :desc ->
           rummage_params = rummage_params
-          |> Map.put(:sort, %{name: field, order: "asc"})
+          |> Map.put(:sort, %{name: field, order: :asc})
 
           url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
           sort_text_or_image(url, [img: asc_icon, text: asc_text], name)
       end
     else
       rummage_params = rummage_params
-      |> Map.put(:sort, %{name: field, order: "asc"})
+      |> Map.put(:sort, %{name: field, order: :asc})
 
       url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
       sort_text_or_image(url, [], name)
