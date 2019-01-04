@@ -43,8 +43,9 @@ defmodule Rummage.Phoenix.SortView do
   ```
   """
   def sort_link(conn, {rummage, rummage_key}, field, name, opts) do
-    opts = opts
-    |> Keyword.merge([rummage_key: rummage_key])
+    opts =
+      opts
+      |> Keyword.merge(rummage_key: rummage_key)
 
     sort_link(conn, rummage, field, name, opts)
   end
@@ -57,34 +58,44 @@ defmodule Rummage.Phoenix.SortView do
     desc_icon = Keyword.get(opts, :desc_icon)
     desc_text = Keyword.get(opts, :desc_text, "↓")
     rummage_key = Keyword.get(opts, :rummage_key, :rummage)
+    extra_params = Keyword.get(opts, :extra_params, %{})
 
     # Drop pagination unless we're showing the entire result set
-    rummage_params = if is_nil(rummage[:paginate][:per_page]) or rummage.paginate.per_page != -1 do
-      Map.drop(rummage, [:paginate])
-    else
-      rummage
-    end
+    rummage_params =
+      if is_nil(rummage[:paginate][:per_page]) or rummage.paginate.per_page != -1 do
+        Map.drop(rummage, [:paginate])
+      else
+        rummage
+      end
 
     if sort_params.name == Atom.to_string(field) do
       case sort_params.order do
         :asc ->
-          rummage_params = rummage_params
-          |> Map.put(:sort, %{name: field, order: :desc})
+          rummage_params =
+            rummage_params
+            |> Map.put(:sort, %{name: field, order: :desc})
 
-          url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
+          url =
+            index_path(opts, [conn, :index, Map.put(extra_params, rummage_key, rummage_params)])
+
           sort_text_or_image(url, [img: desc_icon, text: desc_text], name)
-        :desc ->
-          rummage_params = rummage_params
-          |> Map.put(:sort, %{name: field, order: :asc})
 
-          url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
+        :desc ->
+          rummage_params =
+            rummage_params
+            |> Map.put(:sort, %{name: field, order: :asc})
+
+          url =
+            index_path(opts, [conn, :index, Map.put(extra_params, rummage_key, rummage_params)])
+
           sort_text_or_image(url, [img: asc_icon, text: asc_text], name)
       end
     else
-      rummage_params = rummage_params
-      |> Map.put(:sort, %{name: field, order: :asc})
+      rummage_params =
+        rummage_params
+        |> Map.put(:sort, %{name: field, order: :asc})
 
-      url = index_path(opts, [conn, :index, %{rummage_key => rummage_params}])
+      url = index_path(opts, [conn, :index, Map.put(extra_params, rummage_key, rummage_params)])
       sort_text_or_image(url, [], name)
     end
   end
